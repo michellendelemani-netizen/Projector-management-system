@@ -9,13 +9,7 @@
 </head>
 
 <body>
-    <div>
-        <a href="manager-navigation.html" class="active">Dashboard</a>
-
-        <a href="user-management.php">user Management</a>
-        <a href="Reports.php">Reports</a>
-
-    </div>
+    <?php include("manager-navigation.html"); ?>
     <hr>
     <table border="1">
         <th>projector id</th>
