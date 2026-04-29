@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/navigation.css">
+
+</head>
+
+<body>
+    <!-- wrapper for the humburger and profile -->
+    <div class="all-wrapper">
+        
+
+        
+
+        <!-- top user section -->
+    <div class="nav-wrapper">
+        <!-- hamburger icon for smaller screens dropdown -->
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <!-- tabs -->
+        <div class="tabs" id="tabs">
+            <a href="desk-dashboard.php" class="active">Dashboard</a>
+            <a href="Lend.php">Lend</a>
+            <a href="track.php">Track</a>
+
+            <a href="notifications.php">
+                <span class="tab-icon">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="badge">3</span>
+                </span>
+                Notifications
+            </a>
+        </div>
+
+    <!-- top user section -->
+    <div class="top-bar">
+        <div class="user-info">
+            John Doe
+        </div>
+
+        <a href="edit_profile.php" class="profile-icon">
+            <i class="fa-solid fa-circle-user"></i>
+        </a>
+    </div>
+
+    </div>
+
+    <!-- smaller screens(mobile) menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="desk-dashboard.php">Dashboard</a>
+        <a href="Lend.php">Lend</a>
+        <a href="track.php">Track</a>
+        <a href="notifications.php">
+            <span class="tab-icon">
+                <i class="fa-solid fa-bell"></i>
+                <span class="badge">3</span>
+            </span>
+            Notifications
+        </a>
+    </div>
+
+    </div>
+
+    <script src="scripts/navigation.js"></script>
+
+</body>
+</html>
