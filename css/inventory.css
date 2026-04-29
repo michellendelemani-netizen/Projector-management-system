@@ -7,10 +7,6 @@ body {
     
 }
 
-
-
-
-
 /* Inventory Page Styles */
 
 body > div:first-child {
@@ -32,7 +28,6 @@ body > div:first-child a.active {
     background-color: #5a00d1;
     border-radius: 5px;
 }
-
 
 
 hr {

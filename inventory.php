@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory</title>
     <link rel="stylesheet" href="css/inventory.css">
-    <link rel="stylesheet" href="css/navigation.css">
 </head>
 
 <body>
     <?php include("manager-navigation.html"); ?>
-    <hr>
+    <!-- <hr> -->
+     <br>
     <div class="inventory-container">
         <table border="1">
         <th>projector id</th>
