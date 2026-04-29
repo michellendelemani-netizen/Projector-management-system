@@ -40,6 +40,7 @@ body {
     font-family: "Quicksand", sans-serif;
     gap: 15px; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.621);
+    box-sizing: border-box;
 }
 
 
