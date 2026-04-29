@@ -49,7 +49,8 @@
                             <th>Phone</th>
                             <th>Email</th>
                             <th>Borrowed Date</th>
-                            <th>Return Time</th>
+                            <th>Expected Return</th>
+                            <th>Returned on</th>
                             <th>Reason</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -68,6 +69,7 @@
                             <td>john@email.com</td>
                             <td>2026-04-29 10:00</td>
                             <td>2026-04-29 14:00</td>
+                            <td>2026-04-29 14:00</td>
                             <td>Presentation</td>
 
                             <td>
@@ -81,6 +83,53 @@
                             </td>
                         </tr>
 
+                        <!-- SAMPLE ROW 2-->
+                        <tr>
+                            <td>PJ001</td>
+                            <td>D001</td>
+                            <td>ST123</td>
+                            <td>John Doe</td>
+                            <td>0991234567</td>
+                            <td>john@email.com</td>
+                            <td>2026-04-29 10:00</td>
+                            <td>2026-04-29 14:00</td>
+                            <td>2026-04-29 14:00</td>
+                            <td>Presentation</td>
+
+                            <td>
+                                <span class="status returned">Returned</span>
+                            </td>
+
+                            <td>
+                                <button class="btn return-btn" onclick="markReturned(this)">
+                                    Mark Returned
+                                </button>
+                            </td>
+                        </tr>
+
+                            <!-- SAMPLE ROW 3 -->
+                        <tr>
+                            <td>PJ001</td>
+                            <td>D001</td>
+                            <td>ST123</td>
+                            <td>John Doe</td>
+                            <td>0991234567</td>
+                            <td>john@email.com</td>
+                            <td>2026-04-29 10:00</td>
+                            <td>2026-04-29 14:00</td>
+                            <td>2026-04-29 14:00</td>
+                            <td>Presentation</td>
+
+                            <td>
+                                <span class="status flagged">Flagged</span>
+                            </td>
+
+                            <td>
+                                <button class="btn return-btn" onclick="markReturned(this)">
+                                    Mark Returned
+                                </button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
         </div>
