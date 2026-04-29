@@ -7,7 +7,7 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: #6200ee;
-    flex-wrap: wrap; /* allows next element to drop below */
+    flex-wrap: wrap; 
 }
 
 /* navigation wrapper keeps top-bar and tabs aligned */
@@ -70,8 +70,6 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    /* padding: 10px 15px; */
-   
     color: white;
     gap: 12px;
     margin-left: auto;
