@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <title>Lend Projector</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/lend.css">
     <link rel="stylesheet" href="css/navigation.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
