@@ -1,5 +1,5 @@
 <?php
-include "connection.php";
+//include "connection.php";
 
 // HANDLE FORM SUBMISSION
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<?php include("manager-nav.php"); ?>
+<?php include("desk-navigation.html"); ?>
 
 <div class="container">
 
@@ -110,6 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </form>
 </div>
-<script src="scripts/navigation.js"></script>
+
 </body>
 </html>
