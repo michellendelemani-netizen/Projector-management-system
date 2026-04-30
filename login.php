@@ -1,20 +1,25 @@
 <?php
+include 'connection.php';
 session_start();
 
-$users = [
-    [
-        "username" => "manager1",
-        "email" => "manager@gmail.com",
-        "password" => "admin123",
-        "role" => "admin"
-    ],
-    [
-        "username" => "clerk1",
-        "email" => "clerk@gmail.com",
-        "password" => "clerk123",
-        "role" => "clerk"
-    ]
-];
+$sql="SELECT first_name, email, role, password FROM users";
+$results=  mysqli_query($conn,$sql);
+
+
+// $users = [
+//     [
+//         "username" => "manager1",
+//         "email" => "manager@gmail.com",
+//         "password" => "admin123",
+//         "role" => "admin"
+//     ],
+//     [
+//         "username" => "clerk1",
+//         "email" => "clerk@gmail.com",
+//         "password" => "clerk123",
+//         "role" => "clerk"
+//     ]
+// ];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inputUser = $_POST['user'];
@@ -22,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $found = false;
 
-    foreach ($users as $user) {
+    foreach ($results as $user) {
         if (
             ($user['username'] == $inputUser || $user['email'] == $inputUser) &&
             $user['password'] == $inputPass
@@ -32,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect based on role
             if ($user['role'] == "admin") {
-                header("Location: admin_dashboard.php");
+                header("Location: management.php");
             } else {
-                header("Location: clerk_dashboard.php");
+                header("Location: desk.php");
             }
             exit();
         }
@@ -42,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $error = "Invalid login details!";
 }
-?>
+ ?>
 
 <!DOCTYPE html>
 <html>
