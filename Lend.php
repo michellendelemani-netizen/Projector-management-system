@@ -69,11 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <label>Full name</label>
-        <input type="text" name="full_name" required>
+        <!-- <label>Full name</label>
+        <input type="text" name="full_name" required> -->
 
-        <label>Phone Number</label>
-        <input type="text" name="phone_number" required>
+        <!-- <label>Phone Number</label>
+        <input type="text" name="phone_number" required> -->
 
         <label>Projector</label>
         <select name="projector_id" required>
