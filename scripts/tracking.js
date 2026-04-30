@@ -1,30 +1,47 @@
-function markReturned(button) {
+function markReturned(button, transactionId) {
     if (!confirm("Are you sure you want to mark this item as returned?")) {
-        return; // stop if user clicks Cancel
+        return;
     }
 
     const row = button.closest("tr");
     const statusCell = row.querySelector(".status");
-    const buttonReturn = document.querySelector(".return-btn");
+    const dateInput = row.querySelector(".return-date");
 
-    statusCell.classList.remove("pending", "flagged");
-    statusCell.classList.add("returned");
-    statusCell.textContent = "Returned";
-    button.textContent = "---";
-    button.classList.remove("return-btn", "btn");
-    button.classList.add("return-btn-out");
-}
-function applyFilters() {
-    const status = document.getElementById("statusFilter").value.toLowerCase();
-    const rows = document.querySelectorAll("#trackingTable tr");
+    if (!dateInput.value) {
+        alert("Please select return date");
+        return;
+    }
 
-    rows.forEach(row => {
-        const rowStatus = row.querySelector(".status").textContent.toLowerCase();
+    // convert format
+    let formattedDate = dateInput.value.replace("T", " ") + ":00";
 
-        if (!status || rowStatus === status) {
-            row.style.display = "";
+    fetch("Track.php", {   
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `id=${transactionId}&date=${formattedDate}`
+    })
+    .then(res => res.text())
+    .then(data => {
+        console.log(data); // debug test
+
+        if (data.includes("success")) {
+
+            statusCell.classList.remove("pending", "flagged");
+            statusCell.classList.add("returned");
+            statusCell.textContent = "Returned";
+
+            const cell = dateInput.parentElement;
+            cell.textContent = formattedDate;
+
+            document.getElementById("return-button-content").textContent = "---";
+            button.classList.remove("btn", "return-btn");
+            //button.remove();
+        
+
         } else {
-            row.style.display = "none";
+            alert("Error updating database");
         }
     });
 }

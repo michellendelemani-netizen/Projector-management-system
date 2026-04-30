@@ -1,8 +1,28 @@
 <?php 
     require("connection.php");
 
-    //filters logic(either get one or more at once)
+    
+    //mark as returned logic
+    if (isset($_POST['id']) && isset($_POST['date'])) {
 
+        $id = (int) $_POST['id'];
+        $date = $_POST['date'];
+
+        $sql = "UPDATE transactions 
+                SET status = 'returned',
+                    returned_at = '$date'
+                WHERE transaction_id = $id";
+
+        if ($conn->query($sql)) {
+            echo "success";
+        } else {
+            echo "error: " . $conn->error;
+            echo $date;
+        }
+
+        exit; 
+    }
+//filters logic(either get one or more at once)
     $where = [];
 
 if (!empty($_GET['fromDate'])) {
@@ -182,19 +202,36 @@ if (!$result) {
                                 <td><?= $email ?></td>
                                 <td><?= $row['borrowed_at'] ?></td>
                                 <td><?= $row['expected_return_at'] ?></td>
-                                <td><?= $row['returned_at'] ?></td>
+
+                                <!-- Returned ON -->
+                                <td>
+                                    <?php if ($row['status'] !== 'returned') { ?>
+                                        <input type="datetime-local" class="return-date">
+                                    <?php } else { ?>
+                                        <?= $row['returned_at'] ?>
+                                    <?php } ?>
+                                </td>
+
+
                                 <td><?= $row['reason'] ?></td>
 
+                                <!-- STATUS -->
                                 <td>
                                     <span class="status <?= $row['status'] ?>">
-                                        <?= $row['status'] ?>
+                                        <?= ucfirst($row['status']) ?>
                                     </span>
                                 </td>
 
-                                <td>
-                                    <button class="btn return-btn" onclick="markReturned(this)">
-                                        Mark Returned
-                                    </button>
+                               <!-- ACTION -->
+                                <td id="return-button-content">
+                                    <?php if ($row['status'] !== 'returned') { ?>
+                                        <button class="btn return-btn"
+                                            onclick="markReturned(this, <?= $row['transaction_id'] ?>)">
+                                            Mark Returned
+                                        </button>
+                                    <?php } else { ?>
+                                        ---
+                                    <?php } ?>
                                 </td>
                             </tr>
 
