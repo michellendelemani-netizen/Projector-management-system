@@ -1,3 +1,93 @@
+<?php 
+    require("connection.php");
+
+    //filters logic(either get one or more at once)
+
+    $where = [];
+
+if (!empty($_GET['fromDate'])) {
+    $from = $_GET['fromDate'];
+    $where[] = "t.borrowed_at >= '$from'";
+}
+
+if (!empty($_GET['toDate'])) {
+    $to = $_GET['toDate'];
+    $where[] = "t.borrowed_at <= '$to'";
+}
+
+if (!empty($_GET['status'])) {
+    $status = $_GET['status'];
+    $where[] = "t.status = '$status'";
+}
+
+if (!empty($_GET['userType'])) {
+    $type = $_GET['userType'];
+    $where[] = "t.borrower_type = '$type'";
+}
+
+// Borrower ID (student OR lecturer)
+if (!empty($_GET['borrowerID'])) {
+    $id = $_GET['borrowerID'];
+    $where[] = "(t.student_id = '$id' OR t.lecturer_id = '$id')";
+}
+
+// User ID (desk user)
+if (!empty($_GET['userID'])) {
+    $id = $_GET['userID'];
+    $where[] = "t.user_id = '$id'";
+}
+
+// Projector ID
+if (!empty($_GET['projectorID'])) {
+    $id = $_GET['projectorID'];
+    $where[] = "t.projector_id = '$id'";
+}
+
+$whereSQL = "";
+if (count($where) > 0) {
+    $whereSQL = "WHERE " . implode(" AND ", $where);
+}
+
+    $sql = "
+SELECT 
+    t.transaction_id,
+    t.projector_id,
+    t.user_id,
+    t.borrower_type,
+    t.borrowed_at,
+    t.expected_return_at,
+    t.returned_at,
+    t.reason,
+    t.status,
+
+    s.student_id,
+    s.first_name AS student_first,
+    s.last_name AS student_last,
+    s.phone_number AS student_phone,
+    s.email AS student_email,
+
+    l.lecturer_id,
+    l.first_name AS lecturer_first,
+    l.last_name AS lecturer_last,
+    l.phone_number AS lecturer_phone,
+    l.email AS lecturer_email
+
+FROM transactions t
+LEFT JOIN students s ON t.student_id = s.student_id
+LEFT JOIN lecturers l ON t.lecturer_id = l.lecturer_id
+$whereSQL
+ORDER BY t.transaction_id DESC
+";
+
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("SQL Error: " . $conn->error);
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,35 +103,42 @@
         <div class="tracking-container">
 
             <!-- FILTERS -->
-            <div class="filters">
+            <form method="GET" class="filters">
 
-                <label for="">From: </label><input type="date" id="fromDate">
-                <label for="">To: </label><input type="date" id="toDate">
+                <label>From:</label>
+                <input type="date" name="fromDate">
 
-                <select id="statusFilter">
+                <label>To:</label>
+                <input type="date" name="toDate">
+
+                <select name="status">
                     <option value="">All Status</option>
                     <option value="pending">Pending</option>
                     <option value="returned">Returned</option>
                     <option value="flagged">Flagged</option>
                 </select>
 
-                <select id="userTypeFilter">
+                <select name="userType">
                     <option value="">All Users</option>
                     <option value="student">Student</option>
                     <option value="lecturer">Lecturer</option>
                 </select>
 
-                <input type="text" id="searchUser" placeholder="Search by ID">
+                <input type="text" name="userID" placeholder="Search by desk userID">
+                <input type="text" name="projectorID" placeholder="Search by projectorID">
+                <input type="text" name="borrowerID" placeholder="Search by lecturerID/studentID">
 
-                <button onclick="applyFilters()">Filter</button>
+                <button type="submit">
+                    <i class="fa fa-filter"></i> Filter
+                </button>
 
-            </div>
-
+            </form>
             <!-- TABLE -->
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
+                            <th>Transaction ID</th>
                             <th>Projector ID</th>
                             <th>Desk User</th>
                             <th>Borrower</th>
@@ -56,80 +153,53 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-
+                    <!-- TABLE ROWS(data) -->
                     <tbody id="trackingTable">
 
-                        <!-- SAMPLE ROW -->
-                        <tr>
-                            <td>PJ001</td>
-                            <td>D001</td>
-                            <td>ST123</td>
-                            <td>John Doe</td>
-                            <td>0991234567</td>
-                            <td>john@email.com</td>
-                            <td>2026-04-29 10:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>Presentation</td>
+                            <?php while ($row = $result->fetch_assoc()) { ?>
 
-                            <td>
-                                <span class="status pending">Pending</span>
-                            </td>
+                            <?php
+                                if ($row['borrower_type'] == 'student') {
+                                    $name = $row['student_first'] . " " . $row['student_last'];
+                                    $phone = $row['student_phone'];
+                                    $email = $row['student_email'];
+                                    $borrowerId = $row['student_id'];
+                                } else {
+                                    $name = $row['lecturer_first'] . " " . $row['lecturer_last'];
+                                    $phone = $row['lecturer_phone'];
+                                    $email = $row['lecturer_email'];
+                                    $borrowerId = $row['lecturer_id'];
+                                }
+                            ?>
 
-                            <td>
-                                <button class="btn return-btn" onclick="markReturned(this)">
-                                    Mark Returned
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><?= $row['transaction_id'] ?></td>
+                                <td><?= $row['projector_id'] ?></td>
+                                <td><?= $row['user_id'] ?></td>
+                                <td><?= $borrowerId ?></td>
+                                <td><?= $name ?></td>
+                                <td><?= $phone ?></td>
+                                <td><?= $email ?></td>
+                                <td><?= $row['borrowed_at'] ?></td>
+                                <td><?= $row['expected_return_at'] ?></td>
+                                <td><?= $row['returned_at'] ?></td>
+                                <td><?= $row['reason'] ?></td>
 
-                        <!-- SAMPLE ROW 2-->
-                        <tr>
-                            <td>PJ001</td>
-                            <td>D001</td>
-                            <td>ST123</td>
-                            <td>John Doe</td>
-                            <td>0991234567</td>
-                            <td>john@email.com</td>
-                            <td>2026-04-29 10:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>Presentation</td>
+                                <td>
+                                    <span class="status <?= $row['status'] ?>">
+                                        <?= $row['status'] ?>
+                                    </span>
+                                </td>
 
-                            <td>
-                                <span class="status returned">Returned</span>
-                            </td>
+                                <td>
+                                    <button class="btn return-btn" onclick="markReturned(this)">
+                                        Mark Returned
+                                    </button>
+                                </td>
+                            </tr>
 
-                            <td>
-                                <button class="btn return-btn" onclick="markReturned(this)">
-                                    Mark Returned
-                                </button>
-                            </td>
-                        </tr>
+                            <?php } ?>
 
-                            <!-- SAMPLE ROW 3 -->
-                        <tr>
-                            <td>PJ001</td>
-                            <td>D001</td>
-                            <td>ST123</td>
-                            <td>John Doe</td>
-                            <td>0991234567</td>
-                            <td>john@email.com</td>
-                            <td>2026-04-29 10:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>2026-04-29 14:00</td>
-                            <td>Presentation</td>
-
-                            <td>
-                                <span class="status flagged">Flagged</span>
-                            </td>
-
-                            <td>
-                                <button class="btn return-btn" onclick="markReturned(this)">
-                                    Mark Returned
-                                </button>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
         </div>

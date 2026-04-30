@@ -139,7 +139,7 @@ body {
 .badge {
     position: absolute;
     top: -6px;
-    right: -10px;
+    right: -7px;
     background: red;
     color: white;
     font-size: 10px;
