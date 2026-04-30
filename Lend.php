@@ -1,5 +1,5 @@
 <?php
-//include "connection.php";
+include "connection.php";
 
 // HANDLE FORM SUBMISSION
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
