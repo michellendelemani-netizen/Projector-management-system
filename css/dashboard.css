@@ -1,0 +1,40 @@
+body {
+  font-family: Arial;
+  margin: 20px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+/* Cards */
+.card {
+  background: #1e293b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+/* Boxes */
+.box {
+  background: #f1f5f9;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* Layout positions */
+.alerts {
+  grid-column: span 2;
+}
+
+.insights {
+  grid-column: span 1;
+}
+
+.news {
+  grid-column: span 1;
+}
