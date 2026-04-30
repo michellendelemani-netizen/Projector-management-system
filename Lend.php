@@ -38,10 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Lend Projector</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<?php include("manager-navigation.html"); ?>
+<?php include("manager-nav.php"); ?>
 
 <div class="container">
 
@@ -108,6 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </form>
 </div>
-
+<script src="scripts/navigation.js"></script>
 </body>
 </html>

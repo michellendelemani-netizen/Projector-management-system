@@ -12,10 +12,12 @@ body {
     background: linear-gradient(135deg, #4facfe, #00f2fe);
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    min-width: 100vh;
 }
 
 .container {
-    width: 95%;
+    width: 100%;
     max-width: 1000px;   
     margin: 40px auto;
     background: #ffffff;
@@ -83,4 +85,358 @@ button:hover {
     border-radius: 6px;
     margin-bottom: 15px;
     text-align: center;
+body {
+    margin: 0;
+}
+.all-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #6200ee;
+    flex-wrap: wrap; 
+}
+
+/* navigation wrapper keeps top-bar and tabs aligned */
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* important */
+    background-color: #6200ee;
+    width: 100%;
+    padding: 0 10px;
+    font-family: "Quicksand", sans-serif;
+    gap: 20px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.621);
+}
+
+
+.tabs {
+    display: flex;
+    gap: 220px; 
+    padding-right: 30px; 
+    margin-right: 20px;  
+    border-right: 2px solid rgba(255,255,255,0.2);
+    font-size: 20px;
+}
+
+
+.tabs a {
+    text-align: center;
+    padding: 20px 18px; 
+    text-decoration: none;
+    color: #fff6f6;
+    font-weight: 500;
+    position: relative;
+    white-space: nowrap;
+}
+
+
+.tabs a:hover {
+    background-color: #5a00d1;
+}
+
+/* Add Projector Form Styles */
+body {
+    font-family: "Quicksand", sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 2px solid #6200ee;
+    margin: 10px 0 20px;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #6200ee;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #6200ee;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #5a00d1;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #6200ee;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #5a00d1;
+}
+
+/* Inventory Page Styles */
+body {
+    font-family: "Quicksand", sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin: 0;
+}
+
+body > div:first-child {
+    background-color: #6200ee;
+    padding: 15px 20px;
+    display: flex;
+    gap: 20px;
+}
+
+body > div:first-child a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-weight: 500;
+}
+
+body > div:first-child a:hover,
+body > div:first-child a.active {
+    background-color: #5a00d1;
+    border-radius: 5px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #6200ee;
+    color: white;
+}
+
+.user-info {
+    font-weight: 600;
+}
+
+.profile-icon {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+hr {
+    border: 2px solid #6200ee;
+    margin: 0 0 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #6200ee;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+table button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+
+.tabs a.active {
+    color: #f5f5f5;
+}
+
+/* underline indicator */
+.tabs a.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 3px;
+    background-color: #f5f5f5;
+}
+
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+    gap: 12px;
+    margin-left: auto;
+     
+}
+
+
+.user-info {
+    font-weight: 500;
+}
+
+
+.profile-icon {
+    color: white;
+    font-size: 26px;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.profile-icon:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+
+.tab-icon {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+/* hamburger menu icon */
+.menu-toggle {
+    display: none;
+    color: white;
+    font-size: 22px;
+    padding: 15px;
+    cursor: pointer;
+    background-color: #6200ee;
+}
+
+/* mobile menu */
+.mobile-menu {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    background-color: #6200ee;
+    font-family: "Quicksand", sans-serif;
+    /* KEY FIX */
+    position: relative;
+    z-index: 10;
+}
+
+.mobile-menu a {
+    padding: 14px;
+    text-decoration: none;
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+/* mobile menu open state */
+.mobile-menu.open {
+    display: flex;
+    width: 100%;
+}
+
+/* responsive behavior on smaller screens */
+@media (max-width: 700px) {
+
+    .tabs {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .top-bar {
+        margin-left: auto; 
+    }
+}
+
+/* ensure desktop always shows tabs and hides mobile menu */
+@media (min-width: 701px) {
+    .tabs {
+        display: flex !important;
+    }
+
+    .mobile-menu {
+        display: none !important;
+    }
+}
+.sus {
+    background: orange;
+    color: white;
+}
+.rem {
+    background: red;
+    color: white;
 }
