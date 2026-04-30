@@ -2,26 +2,7 @@
     require("connection.php");
 
     
-    //mark as returned logic
-    if (isset($_POST['id']) && isset($_POST['date'])) {
-
-        $id = (int) $_POST['id'];
-        $date = $_POST['date'];
-
-        $sql = "UPDATE transactions 
-                SET status = 'returned',
-                    returned_at = '$date'
-                WHERE transaction_id = $id";
-
-        if ($conn->query($sql)) {
-            echo "success";
-        } else {
-            echo "error: " . $conn->error;
-            echo $date;
-        }
-
-        exit; 
-    }
+    
 //filters logic(either get one or more at once)
     $where = [];
 
@@ -69,35 +50,36 @@ if (count($where) > 0) {
 }
 
     $sql = "
-SELECT 
-    t.transaction_id,
-    t.projector_id,
-    t.user_id,
-    t.borrower_type,
-    t.borrowed_at,
-    t.expected_return_at,
-    t.returned_at,
-    t.reason,
-    t.status,
+            SELECT 
+                t.transaction_id,
+                t.projector_id,
+                t.user_id,
+                t.borrower_type,
+                t.borrowed_at,
+                t.expected_return_at,
+                t.returned_at,
+                t.projector_condition,
+                t.reason,
+                t.status,
 
-    s.student_id,
-    s.first_name AS student_first,
-    s.last_name AS student_last,
-    s.phone_number AS student_phone,
-    s.email AS student_email,
+                s.student_id,
+                s.first_name AS student_first,
+                s.last_name AS student_last,
+                s.phone_number AS student_phone,
+                s.email AS student_email,
 
-    l.lecturer_id,
-    l.first_name AS lecturer_first,
-    l.last_name AS lecturer_last,
-    l.phone_number AS lecturer_phone,
-    l.email AS lecturer_email
+                l.lecturer_id,
+                l.first_name AS lecturer_first,
+                l.last_name AS lecturer_last,
+                l.phone_number AS lecturer_phone,
+                l.email AS lecturer_email
 
-FROM transactions t
-LEFT JOIN students s ON t.student_id = s.student_id
-LEFT JOIN lecturers l ON t.lecturer_id = l.lecturer_id
-$whereSQL
-ORDER BY t.transaction_id DESC
-";
+            FROM transactions t
+            LEFT JOIN students s ON t.student_id = s.student_id
+            LEFT JOIN lecturers l ON t.lecturer_id = l.lecturer_id
+            $whereSQL
+            ORDER BY t.transaction_id DESC
+            ";
 
 $result = $conn->query($sql);
 
@@ -168,9 +150,9 @@ if (!$result) {
                             <th>Borrowed Date</th>
                             <th>Expected Return</th>
                             <th>Returned on</th>
+                            <th>Condition</th> 
                             <th>Reason</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <!-- TABLE ROWS(data) -->
@@ -206,12 +188,16 @@ if (!$result) {
                                 <!-- Returned ON -->
                                 <td>
                                     <?php if ($row['status'] !== 'returned') { ?>
-                                        <input type="datetime-local" class="return-date">
+                                       
                                     <?php } else { ?>
                                         <?= $row['returned_at'] ?>
                                     <?php } ?>
                                 </td>
 
+                                <!-- Condition -->
+                                <td>
+                                    <?= $row['projector_condition'] ? ucfirst($row['projector_condition']) : "---" ?>
+                                </td>
 
                                 <td><?= $row['reason'] ?></td>
 
@@ -221,18 +207,7 @@ if (!$result) {
                                         <?= ucfirst($row['status']) ?>
                                     </span>
                                 </td>
-
-                               <!-- ACTION -->
-                                <td id="return-button-content">
-                                    <?php if ($row['status'] !== 'returned') { ?>
-                                        <button class="btn return-btn"
-                                            onclick="markReturned(this, <?= $row['transaction_id'] ?>)">
-                                            Mark Returned
-                                        </button>
-                                    <?php } else { ?>
-                                        ---
-                                    <?php } ?>
-                                </td>
+                                
                             </tr>
 
                             <?php } ?>

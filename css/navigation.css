@@ -46,7 +46,7 @@ body {
 
 .tabs {
     display: flex;
-    gap: 220px; 
+    gap: 150px; 
     padding-right: 30px; 
     margin-right: 20px;  
     border-right: 2px solid rgba(124, 122, 122, 0.312);
