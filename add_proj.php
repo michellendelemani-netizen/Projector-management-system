@@ -12,9 +12,9 @@ if (isset($_POST['save'])) {
     // $condition = $_POST['condition'];
 
     $sql = "INSERT INTO projectors 
-    (model, life_span, manufactured_date, bought_date, status, expected_end_of_life,)
+    (model, life_span, manufactured_date, bought_date, status, expected_end_of_life)
     VALUES 
-    ('$model', '$life_span', '$manufactured_date', '$bought_date', '$status', '$end', )";
+    ('$model', '$life_span', '$manufactured_date', '$bought_date', '$status', '$end')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Projector added successfully!";
