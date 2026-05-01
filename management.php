@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-  <?php include("manager-navigation.html"); ?>
+  <?php include("manager-navigation.php"); ?>
 <h1 >Welcome Manager</h1>
 
 <div class="dashboard">
