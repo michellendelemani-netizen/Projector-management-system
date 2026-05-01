@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add projector</title>
-    <link rel="stylesheet" href="css/inventory.css">
+    <link rel="stylesheet" href="css/add_proj.css">
 </head>
 
 <body>
@@ -13,20 +13,31 @@
     <hr>
     <hr>
     <a href="inventory.php"><button>Back</button></a>
-    <form>
-        <label for="Brand">Brand:</label>
-        <input type="text" name="Brand" required>
-        <br>
+    <form action="add_proj.php" method="post">
         <label for="model">model:</label>
         <input type="text" name="model" required>
+        <br>
+        <label for="life_span">life_span:</label>
+        <input type="number" name="life_span" required>
+        <br>
+        <label for="manufactured_date">manufactured_date:</label>
+        <input type="date" name="manufactured_date" required>
+        <br>
+        <label for="bought_date">bought_date:</label>
+        <input type="date" name="bought_date" required>
         <br>
         <label for="status">status:</label>
         <input type="text" name="status" required>
         <br>
+        <label for="expected_end_of_life">expected_end_of_life:</label>
+        <input type="date" name="expected_end_of_life" required>
+        <br>
         <label for="condition">condition:</label>
         <input type="text" name="condition" required>
+        <br>
+        <input type="submit" name="save" id="sub">
     </form>
-    <input type="submit" name="save">
+
 </body>
 
 </html>
