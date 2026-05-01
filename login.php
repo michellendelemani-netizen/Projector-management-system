@@ -2,41 +2,32 @@
 include 'connection.php';
 session_start();
 
-$sql="SELECT first_name, email, role, password FROM users";
-$results=  mysqli_query($conn,$sql);
-
-
-// $users = [
-//     [
-//         "username" => "manager1",
-//         "email" => "manager@gmail.com",
-//         "password" => "admin123",
-//         "role" => "admin"
-//     ],
-//     [
-//         "username" => "clerk1",
-//         "email" => "clerk@gmail.com",
-//         "password" => "clerk123",
-//         "role" => "clerk"
-//     ]
-// ];
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $inputUser = $_POST['user'];
-    $inputPass = $_POST['password'];
 
-    $found = false;
+    $inputUser = mysqli_real_escape_string($conn, $_POST['user']);
+    $inputPass = mysqli_real_escape_string($conn, $_POST['password']);
 
-    foreach ($results as $user) {
-        if (
-            ($user['username'] == $inputUser || $user['email'] == $inputUser) &&
-            $user['password'] == $inputPass
-        ) {
-            $_SESSION['user'] = $user['username'];
+    // Match by email OR first_name
+    $sql = "SELECT * FROM users 
+        WHERE email = '$inputUser' OR first_name = '$inputUser'";
+
+    $result = mysqli_query($conn, $sql);
+
+    if ($user = mysqli_fetch_assoc($result)) {
+
+        // Plain password check (only if passwords are not hashed)
+       if ($user['password'] == $inputPass) {
+
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['first_name'] = $user['first_name'];
+            $_SESSION['middle_name'] = $user['middle_name'];
+            $_SESSION['last_name'] = $user['last_name'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['home'] = $user['home'];
+            $_SESSION['phone_number'] = $user['phone_number'];
             $_SESSION['role'] = $user['role'];
 
-            // Redirect based on role
-            if ($user['role'] == "admin") {
+            if ($user['role'] == "admin" || $user['role'] == "manager") {
                 header("Location: management.php");
             } else {
                 header("Location: desk.php");
@@ -45,15 +36,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    $error = "Invalid login details!";
+    $error = "incorrect username or password";
 }
- ?>
+?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Projector Management Login</title>
-     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="login-box">
     <h2>Login</h2>
 
     <?php if (isset($error)) echo "<p class='error'>$error</p>"; ?>
