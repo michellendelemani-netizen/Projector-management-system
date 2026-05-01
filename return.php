@@ -59,7 +59,7 @@ if (isset($_GET['projector_id']) && $_GET['projector_id'] != "") {
 <link rel="stylesheet" href="css/return.css">
 </head>
 <body>
-    <?php include("desk-navigation.html");?>
+    <?php include("desk-navigation.php");?>
 
         <div class="container">
                 

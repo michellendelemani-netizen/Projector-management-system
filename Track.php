@@ -100,7 +100,7 @@ if (!$result) {
 </head>
 <body>
     <div class="container">
-        <?php include("desk-navigation.html"); ?>
+        <?php include("desk-navigation.php"); ?>
         
         <div class="tracking-container">
 

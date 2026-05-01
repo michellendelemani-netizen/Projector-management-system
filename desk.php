@@ -6,7 +6,7 @@
 </head>
 
     <body>
-  <?php include("desk-navigation.html"); ?>
+  <?php include("desk-navigation.php"); ?>
         <h1>Desk Dashboard</h1>
 
 <div class="dashboard">

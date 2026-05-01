@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-<?php include("manager-navigation.html"); ?>
+<?php include("manager-navigation.php"); ?>
 
 <div class="container">
 
