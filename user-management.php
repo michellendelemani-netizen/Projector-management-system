@@ -51,8 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h1>
         <i class="fa-solid fa-users"></i>
-        PROJECTOR MANAGEMENT USER REGISTRATION
+        USER REGISTRATION FORM
     </h1>
+    <h5>Fill out this form to register a new at the desk 'authorized' user.</h5>
 
     <!-- POPUP MESSAGE -->
     <?php if ($message != ""): ?>
