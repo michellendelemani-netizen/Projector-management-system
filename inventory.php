@@ -16,7 +16,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-   <?php include("manager-navigation.html"); ?>
+   <?php include("manager-navigation.php"); ?>
     <hr>
     <table border="1">
         <th>projector id</th>
