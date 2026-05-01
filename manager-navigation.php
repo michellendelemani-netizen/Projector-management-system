@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+        // Protect page (redirect if not logged in or role is does not fit)
+        if (!isset($_SESSION['user_id']) && $_SESSION['role'] != 'admin' 
+            && $_SESSION['role'] != 'manager') {
+            header("Location: login.php");
+            exit();
+        }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,9 +52,11 @@
             <!-- top user section -->
             <div class="top-bar">
                 <div class="user-info">
-                    John Doe
+                    <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
                 </div>
-
+                <a href="logout.php" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
                 <a href="edit_profile.php" class="profile-icon">
                     <i class="fa-solid fa-circle-user"></i>
                 </a>
