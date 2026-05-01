@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-/* Center container */
+/* Container */
 .container {
     width: 420px;
     margin: 50px auto;
@@ -19,16 +19,23 @@ body {
 h1 {
     text-align: center;
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #333;
 }
 
 h1 i {
     margin-right: 8px;
-    color: #007bff;
+    color: #6200ee; /* YOUR PURPLE */
 }
 
-/* Form fields */
+/* Subtext */
+h5 {
+    text-align: center;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Form */
 .form-group {
     margin-bottom: 15px;
 }
@@ -50,15 +57,15 @@ input {
 }
 
 input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    border-color: #6200ee;
+    box-shadow: 0 0 5px rgba(98, 0, 238, 0.3);
 }
 
 /* Button */
 button {
     width: 100%;
     padding: 12px;
-    background: #007bff;
+    background: #6200ee; /* YOUR PURPLE */
     border: none;
     color: white;
     font-size: 16px;
@@ -69,37 +76,10 @@ button {
 }
 
 button:hover {
-    background: #0056b3;
+    background: #4b00b5;
 }
 
 /* Popup */
-.popup {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 15px 20px;
-    color: white;
-    border-radius: 8px;
-    font-weight: bold;
-    z-index: 9999;
-    animation: slideFade 3s forwards;
-}
-
-.success {
-    background: #28a745;
-}
-
-.error {
-    background: #dc3545;
-}
-
-@keyframes slideFade {
-    0% {opacity: 0; transform: translateY(-20px);}
-    10% {opacity: 1; transform: translateY(0);}
-    80% {opacity: 1;}
-    100% {opacity: 0;}
-}
-
 .popup {
     position: fixed;
     top: 20px;
