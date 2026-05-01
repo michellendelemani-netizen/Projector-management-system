@@ -1,9 +1,12 @@
-<?php
+/*<?php
 $conn = new mysqli("localhost", "root", "", "projectordb");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
+$message = "";
+$type = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -13,25 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    // Prevent empty inserts
     if ($email != '' && $fullname != '') {
 
         $sql = "INSERT INTO users (desk_id, fullname, phone, email, password)
                 VALUES ('$desk_id', '$fullname', '$phone', '$email', '$password')";
 
         if ($conn->query($sql) === TRUE) {
-            header("Location: user.php?success=1");
-            exit();
+            $message = "User added successfully!";
+            $type = "success";
         } else {
-            header("Location: user.php?error=1");
-            exit();
+            $message = "Error: " . $conn->error;
+            $type = "error";
         }
 
     } else {
-        header("Location: user.php?error=empty");
-        exit();
+        $message = "Please fill all required fields!";
+        $type = "error";
     }
 }
-
-$conn->close();
 ?>

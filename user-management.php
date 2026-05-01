@@ -1,14 +1,51 @@
+<?php
+$conn = new mysqli("localhost", "root", "", "projectordb");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$message = "";
+$type = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $desk_id = $_POST['desk_id'] ?? '';
+    $fullname = $_POST['fullname'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    if ($email != '' && $fullname != '') {
+
+        $sql = "INSERT INTO users (desk_id, fullname, phone, email, password)
+                VALUES ('$desk_id', '$fullname', '$phone', '$email', '$password')";
+
+        if ($conn->query($sql)) {
+            $message = "User added successfully!";
+            $type = "success";
+        } else {
+            $message = "Error: " . $conn->error;
+            $type = "error";
+        }
+
+    } else {
+        $message = "Please fill all required fields!";
+        $type = "error";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>User Registration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <?php include("manager-navigation.html"); ?>
-    <!-- <hr> -->
-     <br>
+
+<?php include("manager-navigation.html"); ?>
 
 <div class="container">
 
@@ -17,19 +54,14 @@
         PROJECTOR MANAGEMENT USER REGISTRATION
     </h1>
 
-    <?php if (isset($_GET['success'])): ?>
-    <div class="popup success">
-        User added successfully and email sent!
-    </div>
-<?php endif; ?>
+    <!-- POPUP MESSAGE -->
+    <?php if ($message != ""): ?>
+        <div class="popup <?php echo $type; ?>">
+            <?php echo $message; ?>
+        </div>
+    <?php endif; ?>
 
-<?php if (isset($_GET['error'])): ?>
-    <div class="popup error">
-        Something went wrong!
-    </div>
-<?php endif; ?>
-
-    <form action="user.php" method="POST">
+    <form method="POST">
 
         <div class="form-group">
             <label>Desk ID</label>
@@ -63,4 +95,4 @@
 </div>
 
 </body>
-
+</html>
