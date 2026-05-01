@@ -16,7 +16,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-   <?php include("manager-navigation.php"); ?>
+   <?php include("manager-navigation.html"); ?>
     <hr>
     <table border="1">
         <th>projector id</th>
@@ -39,8 +39,8 @@ $result = $conn->query($sql);
                     <td>{$row['status']}</td>
                     <td>{$row['expected_end_of_life']}</td>
                     <td>
-                    <button>suspend</button>
-                    <button>remove</button>
+                    <button >suspend</button>
+                    <button >remove</button>
                     </td>
                 </tr>";
             }
