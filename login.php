@@ -21,8 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $user['email'];
             $_SESSION['desk_id'] = $user['desk_id'];
 
-            // Redirect (you can adjust this)
-            header("Location: dashboard.php");
+            // Check if email contains "admin"
+            if (strpos($user['email'], 'admin') !== false) {
+                header("Location: management.php");
+            } else {
+                header("Location: desk.php");
+            }
             exit();
 
         } else {
@@ -34,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
