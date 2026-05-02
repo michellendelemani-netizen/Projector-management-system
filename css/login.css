@@ -11,7 +11,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #4e73df, #1cc88a);
+
+    background: linear-gradient(
+        rgba(78, 115, 223, 0.7),
+        rgba(28, 200, 138, 0.7)
+    ),
+    url('../images/pjc.jpeg') no-repeat center center/cover;
 }
 
 .login-box {
