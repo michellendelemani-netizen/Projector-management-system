@@ -2,7 +2,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
-    require_once("connection.php");
+    require_once("../connection.php");
 
     $sql = "SELECT 
                 i.incident_id,

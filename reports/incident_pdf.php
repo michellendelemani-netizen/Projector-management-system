@@ -1,8 +1,8 @@
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 use Dompdf\Dompdf;
 
-require_once("connection.php");
+require_once("../connection.php");
 
 $sql = "SELECT 
             i.incident_id,
