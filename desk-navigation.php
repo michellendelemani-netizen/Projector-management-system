@@ -54,7 +54,7 @@ session_start();
     <!-- top user section -->
     <div class="top-bar">
         <div class="user-info">
-            <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
+           <?php echo $_SESSION['fullname'] ?? 'User'; ?>
         </div>
         <a href="logout.php" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i>
