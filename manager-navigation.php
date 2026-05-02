@@ -44,7 +44,7 @@ session_start();
             <a href="management.php" class="active"><i class="fa-solid fa-home"></i>Dashboard</a>
             <a href="Inventory.php"><i class="fa-solid fa-clipboard-list"></i>Inventory</a>
             <a href="user-management.php"><i class="fa-solid fa-users"></i>User Management</a>
-            <a href="Reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
+            <a href="reports/Reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
         </div>
 
         
