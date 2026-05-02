@@ -10,6 +10,7 @@ ini_set('display_errors', 1);
     <link rel="stylesheet" href="report_landing_page.css">
 </head>
 <body>
+<?php include("manager-navigation.php"); ?>
 
 <h2>Reports Dashboard</h2>
 

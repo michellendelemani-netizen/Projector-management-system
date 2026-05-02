@@ -20,7 +20,7 @@ session_start();
 
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="navigation.css">
 
 </head>
 
@@ -72,7 +72,7 @@ session_start();
         </div>
     </div>
 
-    <script src="scripts/navigation.js"></script>
+    <script src="navigation.js"></script>
 
 </body>
 
