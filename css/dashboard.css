@@ -2,11 +2,14 @@ body {
   font-family: "Quicksand", sans-serif;
   margin: 20px;
 }
-
+h1{
+  font-family: "Quicksand", sans-serif;
+}
 .dashboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 15px;
+  font-family: "Quicksand", sans-serif;
 }
 
 /* Cards */
@@ -17,6 +20,7 @@ body {
   text-align: center;
   border-radius: 10px;
   font-size: 18px;
+  
 }
 
 /* Boxes */
