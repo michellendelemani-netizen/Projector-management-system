@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+$search= "";
 $sql = "SELECT * FROM projectors";
 $result = $conn->query($sql);
 ?>
@@ -51,7 +52,7 @@ $result = $conn->query($sql);
         <th>expected_end_of_life</th>
         <th>action</th>
         <?php
-         $search= "";
+         
         if (isset($_GET['query'])){
              $search= $_GET['query'];
             $sql= "SELECT * FROM projectors WHERE model LIKE '%$search%'";
@@ -73,10 +74,27 @@ $result = $conn->query($sql);
                 </tr>";
             }
         }else{
-            echo "<tr><td colspan='7'>No projectors found</td></tr>";
+            $sql= "SELECT * FROM projectors;
+            $result= $conn->query($sql);
+        if ($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                echo "<tr>
+                    <td>{$row['projector_id']}</td>
+                    <td>{$row['model']}</td>
+                    <td>{$row['life_span']}</td>
+                    <td>{$row['manufactured_date']}</td>
+                    <td>{$row['bought_date']}</td>
+                    <td>{$row['status']}</td>
+                    <td>{$row['expected_end_of_life']}</td>
+                    <td>
+                    <button >suspend</button>
+                    <button >remove</button>
+                    </td>
+                </tr>";
+            }
         }
     }
-        
+} 
         ?>
     </table>
     <div>
