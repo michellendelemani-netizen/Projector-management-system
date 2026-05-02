@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli( "localhost", "root", "", "projectordb");
+$conn = new mysqli( "localhost", "root", "</>manando$", "projectordb");
 
 if ($conn->connect_error) {
     die("connection failed: " . $conn->connect_error);
