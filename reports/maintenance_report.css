@@ -1,0 +1,49 @@
+body {
+    font-family: Arial;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #2c3e50;
+    color: white;
+}
+.pending {
+    color: red;
+    font-weight: bold;
+}
+.fixed {
+    color: green;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 30px;
+}
+.pdf-btn-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pdf-btn {
+    background-color: #28a745; /* green */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.pdf-btn:hover {
+    background-color: #218838; /* darker green on hover */
+}

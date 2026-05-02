@@ -67,8 +67,8 @@ $result = $conn->query($sql);
                     <td>{$row['status']}</td>
                     <td>{$row['expected_end_of_life']}</td>
                     <td>
-                    <button>suspend</button>
-                    <button>remove</button>
+                    <button >suspend</button>
+                    <button >remove</button>
                     </td>
                 </tr>";
             }
