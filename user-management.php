@@ -1,42 +1,34 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "projectordb");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require("connection.php");
 
 $message = "";
 $type = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $desk_id = $_POST['desk_id'] ?? '';
-    $fullname = $_POST['fullname'] ?? '';
-    $phone = $_POST['phone'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $first_name   = $_POST['firstname'];
+    $middle_name  = $_POST['middlename'] ?? '';
+    $last_name    = $_POST['lastname'];
+    $home         = $_POST['home'];
+    $phone        = $_POST['phone'];
+    $email        = $_POST['email'];
+    $password     = $_POST['password'];
 
-    if ($email != '' && $fullname != '') {
+    $sql = "INSERT INTO users 
+            (first_name, middle_name, last_name, home, phone_number, email, password)
+            VALUES 
+            ('$first_name', '$middle_name', '$last_name', '$home', '$phone', '$email', '$password')";
 
-        $sql = "INSERT INTO users ( fullname, phone, email, password)
-                VALUES ( '$fullname', '$phone', '$email', '$password')";
-
-        if ($conn->query($sql)) {
-            $message = "User added successfully!";
-            $type = "success";
-        } else {
-            $message = "Error: " . $conn->error;
-            $type = "error";
-        }
-
+    if ($conn->query($sql)) {
+        $message = "User added successfully!";
+        $type = "success";
     } else {
-        $message = "Please fill all required fields!";
+        $message = "Error: " . $conn->error;
         $type = "error";
     }
 }
 ?>
 
-<!DOCTYPE html>
 <html>
 <head>
     <title>User Registration</title>
@@ -65,13 +57,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form method="POST">
 
         <div class="form-group">
-            <label>Desk ID</label>
-            <input type="text" name="desk_id" required>
+            <label>First Name</label>
+            <input type="text" name="firstname" required>
         </div>
 
         <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" name="fullname" required>
+            <label>Middle Name (Optional)</label>
+            <input type="text" name="middlename">
+        </div>
+
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="lastname" required>
+        </div>
+
+        <div class="form-group">
+            <label>Home</label>
+            <input type="text" name="home" required>
         </div>
 
         <div class="form-group">
@@ -91,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <button type="submit">Add User</button>
 
-    </form>
+</form>
 
 </div>
 
