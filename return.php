@@ -13,9 +13,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transaction_id'])) {
     $condition = $_POST['projector_condition'];
 
     // First get projector_id from transaction
-    $getProjector = $conn->query("SELECT projector_id FROM transactions WHERE transaction_id = '$id'");
+    $getProjector = $conn->query("SELECT projector_id, borrowed_at FROM transactions WHERE transaction_id = '$id'");
     $row = $getProjector->fetch_assoc();
     $projector_id = $row['projector_id'];
+    $borrowed_at = $row['borrowed_at'];
+
+
+        // VALIDATE RETURN DATE
+    if (strtotime($date) < strtotime($borrowed_at)) {
+        $error = "Return date cannot be before borrowed date.";
+    } else {
 
     // Update transaction
     $sql = "UPDATE transactions 
@@ -24,24 +31,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transaction_id'])) {
                 projector_condition = '$condition'
             WHERE transaction_id = '$id'";
 
-    if ($conn->query($sql)) {
+        if ($conn->query($sql)) {
 
-    //Update
-    if ($condition == "faulty") {
-        $conn->query("UPDATE projectors 
-                      SET status = 'faulty', is_active = 0 
-                      WHERE projector_id = '$projector_id'");
-    } else {
-        $conn->query("UPDATE projectors 
-                      SET status = 'available', is_active = 1 
-                      WHERE projector_id = '$projector_id'");
+                //Update
+                if ($condition == "faulty") {
+                    $conn->query("UPDATE projectors 
+                                SET status = 'faulty', is_active = 0 
+                                WHERE projector_id = '$projector_id'");
+                } else {
+                    $conn->query("UPDATE projectors 
+                                SET status = 'available', is_active = 1 
+                                WHERE projector_id = '$projector_id'");
+                }
+
+                $success = "Projector returned successfully!";
+
+        } else {
+        $error = "Error: " . $conn->error;
+        }
     }
-
-    $success = "Projector returned successfully!";
-
-} else {
-    $error = "Error: " . $conn->error;
-}
 }
 
 // SEARCH BY PROJECTOR ID

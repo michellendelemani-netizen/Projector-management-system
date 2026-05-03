@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($email != '' && $fullname != '') {
 
-        $sql = "INSERT INTO users (desk_id, fullname, phone, email, password)
-                VALUES ('$desk_id', '$fullname', '$phone', '$email', '$password')";
+        $sql = "INSERT INTO users ( fullname, phone, email, password)
+                VALUES ( '$fullname', '$phone', '$email', '$password')";
 
         if ($conn->query($sql)) {
             $message = "User added successfully!";
