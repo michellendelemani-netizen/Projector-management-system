@@ -4,42 +4,40 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $inputUser = mysqli_real_escape_string($conn, $_POST['user']);
-    $inputPass = mysqli_real_escape_string($conn, $_POST['password']);
+    $email = mysqli_real_escape_string($conn, $_POST['user']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Match by email OR first_name
-    $sql = "SELECT * FROM users 
-        WHERE email = '$inputUser' OR first_name = '$inputUser'";
-
+    // Check using email ONLY
+    $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($user = mysqli_fetch_assoc($result)) {
 
-        // Plain password check (only if passwords are not hashed)
-       if ($user['password'] == $inputPass) {
+        // Check password
+        if ($user['password'] == $password) {
 
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['first_name'] = $user['first_name'];
-            $_SESSION['middle_name'] = $user['middle_name'];
-            $_SESSION['last_name'] = $user['last_name'];
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['fullname'] = $user['fullname'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['home'] = $user['home'];
-            $_SESSION['phone_number'] = $user['phone_number'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['desk_id'] = $user['desk_id'];
 
-            if ($user['role'] == "admin" || $user['role'] == "manager") {
+            // Check if email contains "admin"
+            if (strpos($user['email'], 'admin') !== false) {
                 header("Location: management.php");
             } else {
                 header("Location: desk.php");
             }
             exit();
-        }
-    }
 
-    $error = "incorrect username or password";
+        } else {
+            $error = "Incorrect password";
+        }
+
+    } else {
+        $error = "User not found";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
