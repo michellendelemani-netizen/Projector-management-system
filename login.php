@@ -7,22 +7,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['user']);
     $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Check using email ONLY
     $sql = "SELECT * FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($user = mysqli_fetch_assoc($result)) {
 
-        // Check password
         if ($user['password'] == $password) {
 
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['fullname'] = $user['fullname'];
+            // FIXED session variables
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['desk_id'] = $user['desk_id'];
+            $_SESSION['name'] = $user['first_name'];
+            $_SESSION['role'] =$user['role'];
 
-            // Check if email contains "admin"
-            if (strpos($user['email'], 'admin') !== false) {
+            // Redirect based on role (better than email check)
+            if ($user['role'] == 'manager') {
                 header("Location: management.php");
             } else {
                 header("Location: desk.php");
