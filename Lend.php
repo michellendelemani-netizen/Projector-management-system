@@ -5,8 +5,10 @@ if (session_status() == PHP_SESSION_NONE)
     }
 include "connection.php";
 
-if (!isset($_SESSION['user_id'])) {
-    die("user not logged in.");
+    // Protect page (redirect if not logged in)
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'desk') {
+                header("Location: login.php");
+                exit();
 }
 
 // HANDLE FORM SUBMISSION
