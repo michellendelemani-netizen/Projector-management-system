@@ -5,23 +5,17 @@ if (session_status() == PHP_SESSION_NONE)
     }
 include "connection.php";
 
-    // Protect page (redirect if not logged in)
-    if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'desk') {
-                header("Location: login.php");
-                exit();
-}
-
 // HANDLE FORM SUBMISSION
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $projector_id = $_POST['projector_id'];
-    $user_type    = $_POST['user_type']; // Lecturer or Student
+    $user_type    = $_POST['user_type']; 
     $borrower_id  = $_POST['user_id'];
     $reason       = $_POST['reason'];
     $borrow_time  = $_POST['borrow_time'];
     $return_time  = $_POST['return_time'];
-
-    $user_id = $_SESSION['user_id']; // logged in desk user
+    $user_id      = $_SESSION['user_id'];
+     // logged in desk user
 
     // VALIDATE TIME
     if (strtotime($return_time) <= strtotime($borrow_time)) {
@@ -54,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        // ONLY INSERT IF NO ERROR
         if (empty($error)) {
 
             $sql = "INSERT INTO transactions 
@@ -77,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Lend Projector</title>
     <link rel="stylesheet" href="css/lend.css">
