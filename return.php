@@ -139,8 +139,10 @@ if (isset($_GET['projector_id']) && $_GET['projector_id'] != "") {
                     </select>
                 </div>
 
-                <button class="submit" type="submit">Confirm Return</button>
-
+                <div class="btn-group">
+                    <button class="submit" type="submit">Confirm Return</button>
+                    <a href="return.php" class="cancel">Cancel</a>
+                </div>
             </form>
 
             </div>

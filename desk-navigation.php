@@ -73,6 +73,7 @@ session_start();
         <a href="desk.php"><i class="fa-solid fa-home"></i>Dashboard</a>
         <a href="Lend.php"><i class="fa-solid fa-hand-holding"></i>Lend</a>
         <a href="track.php"><i class="fa-solid fa-location-dot"></i>Track</a>
+        <a href="return.php"><i class="fa fa-undo"></i>Return</a>
         <a href="notifications.php">
             <span class="tab-icon">
                 <i class="fa-solid fa-bell"></i>
