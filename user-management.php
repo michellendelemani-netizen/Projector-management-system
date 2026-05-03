@@ -3,6 +3,22 @@ require("connection.php");
 
 $message = "";
 $type = "";
+$edit_user = null;
+//deleting a user
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+
+    $conn->query("UPDATE users SET is_active = 0 WHERE user_id = $id");
+
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+};
+
+//editing a user
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $edit_user = $conn->query("SELECT * FROM users WHERE user_id = $id")->fetch_assoc();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -15,9 +31,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password     = $_POST['password'];
 
     $sql = "INSERT INTO users 
-            (first_name, middle_name, last_name, home, phone_number, email, password)
-            VALUES 
-            ('$first_name', '$middle_name', '$last_name', '$home', '$phone', '$email', '$password')";
+        (first_name, middle_name, last_name, home, phone_number, email, password, is_active)
+        VALUES 
+        ('$first_name', '$middle_name', '$last_name', '$home', '$phone', '$email', '$password', 1)";
 
     if ($conn->query($sql)) {
         $message = "User added successfully!";
@@ -56,45 +72,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form method="POST">
 
-        <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="firstname" required>
-        </div>
+        <div class="form-row">
 
-        <div class="form-group">
-            <label>Middle Name (Optional)</label>
-            <input type="text" name="middlename">
-        </div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="firstname" value="<?php echo $edit_user['first_name'] ?? ''; ?>" required>
+            </div>
 
-        <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" name="lastname" required>
-        </div>
+            <div class="form-group">
+                <label>Middle Name (Optional)</label>
+                <input type="text" name="middlename" value="<?php echo $edit_user['middle_name'] ?? ''; ?>" >
+            </div>
 
-        <div class="form-group">
-            <label>Home</label>
-            <input type="text" name="home" required>
-        </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="lastname"   value="<?php echo $edit_user['last_name'] ?? ''; ?>" required>
+            </div>
 
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="text" name="phone" required>
-        </div>
+            <div class="form-group">
+                <label>Home</label>
+                <input type="text" name="home" value="<?php echo $edit_user['home'] ?? ''; ?>" required>
+            </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
-        </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" name="phone"  value="<?php echo $edit_user['phone_number'] ?? ''; ?>" required>
+            </div>
 
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" value="<?php echo $edit_user['email'] ?? ''; ?>" required>
+            </div>
 
-        <button type="submit">Add User</button>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" value="<?php echo $edit_user['password'] ?? ''; ?>" required>
+            </div>
+
+            <button type="submit">
+                <?php echo isset($edit_user) ? "Update User" : "Add User"; ?>
+            </button>
+
+        </div>
 
 </form>
 
+<h2 style="margin-top:30px;">Registered Users</h2>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Middle Name</th>
+        <th>Last Name</th>
+        <th>Home</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+    <?php
+    $result = $conn->query("SELECT * FROM users WHERE is_active = 1 ORDER BY user_id DESC");
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>{$row['user_id']}</td>
+                    <td>{$row['first_name']}</td>
+                    <td>{$row['middle_name']}</td>
+                    <td>{$row['last_name']}</td>
+                    <td>{$row['home']}</td>
+                    <td>{$row['phone_number']}</td>
+                    <td>{$row['email']}</td>
+                    <td>
+                    <a href='?edit={$row['user_id']}'>Edit</a> |
+                    <a href='?delete={$row['user_id']}' onclick=\"return confirm('Delete this user?')\">Delete</a>
+                    </td>
+                  </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='7'>No users found</td></tr>";
+    }
+    ?>
+</table>
 </div>
 
 </body>
