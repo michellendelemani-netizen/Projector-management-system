@@ -12,6 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transaction_id'])) {
     $date = $_POST['returned_at'];
     $condition = $_POST['projector_condition'];
 
+    // First get projector_id from transaction
+    $getProjector = $conn->query("SELECT projector_id FROM transactions WHERE transaction_id = '$id'");
+    $row = $getProjector->fetch_assoc();
+    $projector_id = $row['projector_id'];
+
+    // Update transaction
     $sql = "UPDATE transactions 
             SET status = 'returned',
                 returned_at = '$date',
@@ -19,10 +25,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['transaction_id'])) {
             WHERE transaction_id = '$id'";
 
     if ($conn->query($sql)) {
-        $success = "Projector returned successfully!";
+
+    //Update
+    if ($condition == "faulty") {
+        $conn->query("UPDATE projectors 
+                      SET status = 'faulty', is_active = 0 
+                      WHERE projector_id = '$projector_id'");
     } else {
-        $error = "Error: " . $conn->error;
+        $conn->query("UPDATE projectors 
+                      SET status = 'available', is_active = 1 
+                      WHERE projector_id = '$projector_id'");
     }
+
+    $success = "Projector returned successfully!";
+
+} else {
+    $error = "Error: " . $conn->error;
+}
 }
 
 // SEARCH BY PROJECTOR ID
