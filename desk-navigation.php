@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-// Protect page (safe check)
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || 
+    strpos($_SESSION['email'], 'admin') !== false) {
+
     header("Location: login.php");
     exit();
 }
