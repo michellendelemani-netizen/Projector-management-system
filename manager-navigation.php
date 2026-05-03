@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-        // Protect page (redirect if not logged in or role is does not fit)
-        if (!isset($_SESSION['user_id']) && $_SESSION['role'] != 'admin' 
-            && $_SESSION['role'] != 'manager') {
-            header("Location: login.php");
-            exit();
-        }
+if (!isset($_SESSION['user_id']) || 
+    strpos($_SESSION['email'], 'admin') === false) {
+
+    header("Location: login.php");
+    exit();
+}
 ?>
 
 
