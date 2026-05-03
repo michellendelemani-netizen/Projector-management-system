@@ -4,40 +4,44 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = mysqli_real_escape_string($conn, $_POST['user']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $inputUser = mysqli_real_escape_string($conn, $_POST['user']);
+    $inputPass = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Check using email ONLY
-    $sql = "SELECT * FROM users WHERE email = '$email'";
+    // Fetching data
+    $sql = "SELECT * FROM users 
+            WHERE email = '$inputUser' OR first_name = '$inputUser'";
+
     $result = mysqli_query($conn, $sql);
 
     if ($user = mysqli_fetch_assoc($result)) {
 
-        // Check password
-        if ($user['password'] == $password) {
+        // Plain password check 
+        if ($user['password'] == $inputPass) {
 
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['fullname'] = $user['fullname'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['desk_id'] = $user['desk_id'];
+            // Initialize all session variables
+            $_SESSION['user_id']      = $user['user_id'];
+            $_SESSION['first_name']   = $user['first_name'];
+            $_SESSION['middle_name']  = $user['middle_name'];
+            $_SESSION['last_name']    = $user['last_name'];
+            $_SESSION['email']        = $user['email'];
+            $_SESSION['role']         = $user['role'];
 
-            // Check if email contains "admin"
-            if (strpos($user['email'], 'admin') !== false) {
+        
+
+            // Redirect based on role
+            if ($user['role'] == "admin" || $user['role'] == "manager") {
                 header("Location: management.php");
             } else {
                 header("Location: desk.php");
             }
             exit();
-
-        } else {
-            $error = "Incorrect password";
         }
-
-    } else {
-        $error = "User not found";
     }
+
+    $error = "incorrect username or password";
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

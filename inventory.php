@@ -76,6 +76,29 @@ $result = $conn->query($sql);
         }else{
             echo "<tr><td colspan='7'>No projectors found</td></tr>";
         }
+    } else{
+        //dynamically display projdectors
+            if ($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                echo "<tr>
+                    <td>{$row['projector_id']}</td>
+                    <td>{$row['model']}</td>
+                    <td>{$row['life_span']}</td>
+                    <td>{$row['manufactured_date']}</td>
+                    <td>{$row['bought_date']}</td>
+                    <td>{$row['status']}</td>
+                    <td>{$row['expected_end_of_life']}</td>
+                    <td>
+                    <button >suspend</button>
+                    <button >remove</button>
+                    </td>
+                </tr>";
+            }
+        }else{
+            echo "<tr><td colspan='7'>No projectors found</td></tr>";
+        }
+
+
     }
         
         ?>

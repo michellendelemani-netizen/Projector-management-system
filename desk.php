@@ -40,17 +40,15 @@ $activityResult = $conn->query($activityQuery);
 
 <div class="dashboard">
 
-  <!-- Quick Actions -->
-  <a href="lend.php" class="card action">➕ Issue Projector</a>
-  <a href="return.php" class="card action">🔄 Return Projector</a>
-
+ 
   <!-- Status -->
   <div class="card">Available <br><b><?php echo $available; ?></b></div>
   <div class="card">Borrowed <br><b><?php echo $borrowed; ?></b></div>
-
+  <br>
+  <br>
   <!-- Urgent -->
   <div class="box alerts">
-    <h3>⏰ Urgent</h3>
+    <h3> Urgent</h3>
     <p><?php echo $overdue; ?> overdue projectors</p>
   </div>
 
