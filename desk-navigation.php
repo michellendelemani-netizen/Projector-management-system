@@ -1,12 +1,13 @@
 <?php
+if (session_status() == PHP_SESSION_NONE)
+    {
 session_start();
-
-if (!isset($_SESSION['user_id']) || 
-    strpos($_SESSION['email'], 'admin') !== false) {
-
-    header("Location: login.php");
-    exit();
-}
+    }
+        // Protect page (redirect if not logged in)
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'desk') {
+            header("Location: login.php");
+            exit();
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +56,7 @@ if (!isset($_SESSION['user_id']) ||
     <!-- top user section -->
     <div class="top-bar">
         <div class="user-info">
-           <?php echo $_SESSION['fullname'] ?? 'User'; ?>
+            <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
         </div>
         <a href="logout.php" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -72,7 +73,6 @@ if (!isset($_SESSION['user_id']) ||
         <a href="desk.php"><i class="fa-solid fa-home"></i>Dashboard</a>
         <a href="Lend.php"><i class="fa-solid fa-hand-holding"></i>Lend</a>
         <a href="track.php"><i class="fa-solid fa-location-dot"></i>Track</a>
-        <a href="return.php"><i class="fa fa-undo"></i>Return</a>
         <a href="notifications.php">
             <span class="tab-icon">
                 <i class="fa-solid fa-bell"></i>
