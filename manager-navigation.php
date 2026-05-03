@@ -44,7 +44,7 @@ session_start();
             <a href="management.php" class="active"><i class="fa-solid fa-home"></i>Dashboard</a>
             <a href="Inventory.php"><i class="fa-solid fa-clipboard-list"></i>Inventory</a>
             <a href="user-management.php"><i class="fa-solid fa-users"></i>User Management</a>
-            <a href="Reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
+            <a href="reports/reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
         </div>
 
         
@@ -52,7 +52,7 @@ session_start();
             <!-- top user section -->
             <div class="top-bar">
                 <div class="user-info">
-                    <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
+                    <?php echo $_SESSION['fullname'] ?? 'Admin'; ?>
                 </div>
                 <a href="logout.php" class="logout-btn">
                     <i class="fa-solid fa-right-from-bracket"></i>
@@ -68,7 +68,7 @@ session_start();
             <a href="management.php"><i class="fa-solid fa-home"></i>Dashboard</a>
             <a href="Inventory.php"><i class="fa-solid fa-clipboard-list"></i>Inventory</a>
             <a href="user-management.php"><i class="fa-solid fa-users"></i>User Management</a>
-            <a href="Reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
+            <a href="reports/reports.php"><i class="fa-solid fa-chart-line"></i>Reports</a>
         </div>
     </div>
 
