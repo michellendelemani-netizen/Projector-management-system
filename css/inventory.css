@@ -1,10 +1,71 @@
-/* RESET + BODY */
+/* RESET + BODY */ 
 
 body {
     margin: 0;
     padding: 0;
     font-family: "Quicksand", sans-serif;
     
+}
+
+/* center search bar at top */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* make search form horizontal */
+.search-container form {
+    display: flex;
+    gap: 10px;
+}
+
+/* make add form horizontal */
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* FIXED BUTTON STYLE */
+button{
+    background-color: #6200ee;
+    color: white;
+    padding: 0 15px;
+    border-radius: 5px;   
+    border: none;
+    height: 42px;
+    cursor: pointer;
+}
+
+/* FIXED INPUT STYLE */
+input {
+    padding: 0 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 42px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* FIX DATE INPUT (they behave differently) */
+input[type="date"] {
+    padding: 0 8px;
+}
+
+/* LABEL FIX */
+.form-inline label {
+    font-size: 14px;
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+/* SEARCH INPUT SLIGHTLY SMALLER */
+.search-container input {
+    width: 220px;
 }
 
 /* Inventory Page Styles */
@@ -28,7 +89,6 @@ body > div:first-child a.active {
     background-color: #5a00d1;
     border-radius: 5px;
 }
-
 
 hr {
     border: 2px solid #6200ee;
@@ -62,22 +122,21 @@ table button {
     padding: 6px 12px;
     margin-right: 5px;
     font-size: 12px;
+    height: auto; /* keep table buttons small */
 }
 
-button{
-    border: none;
-
-}
 a button{
     background-color: #6200ee;
     color: white;
     padding: 10px;
     border-radius: 5px;
 }
+
 .sus {
     background: orange;
     color: white;
 }
+
 .rem {
     background: red;
     color: white;

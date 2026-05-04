@@ -22,39 +22,30 @@ $result = $conn->query($sql);
    <?php include("manager-navigation.php"); ?>
     <hr>
 
-    <form method="GET" >
-        <input type="text" name="query" placeholder="Search..." value="<?php echo"$search" ; ?>">
+    <div class="search-container">
+    <form method="GET">
+        <input type="text" name="query" placeholder="Search by projector id" value="<?php echo "$search"; ?>">
         <button type="submit">Search</button>
-        
-        <style>
-            button{
-                background-color: #6200ee;
-                color: white;
-                padding: 10px;
-                border-radius: 5px;   
-            }
-            input {
-                padding:10px;
-                width:250px;
-                border:1px solid;
-                border-radius:5px;
-            }
-            </style>
-
-</form>
+    </form>
+</div>
+<br>
 <form method="POST" action="add_proj.php" class="form-inline">
+    
     <input type="hidden" name="projector_id" id="projector_id">
+     <label for="manufactured_date">Model: </label>
     <input type="text" name="model" placeholder="Model" id="model" required>
+    <label for="status">status: </label>
     <input type="number" name="life_span" placeholder="Life Span" id="life_span" required>
-    <label for="manufactured_date">manufactured_date</label>
+    <label for="manufactured_date">manufactured_date: </label>
     <input type="date" name="manufactured_date" id="manufactured_date" required>
-    <label for="bought_date">bought_date</label>
+    <label for="bought_date">bought_date: </label>
     <input type="date" name="bought_date" id="bought_date" required>
     <input type="text" name="status" id="status" placeholder="status"  required>
-    <label for="expected_end_of_life">expected end date</label>
+    <label for="expected_end_of_life">expected end date: </label>
     <input type="date" name="expected_end_of_life" id="expected_end_life" required>
     <button type="submit" name="save">Add</button>
 </form>
+<br>
     <table border="1">
         <th>projector id</th>
         <th>model</th>
