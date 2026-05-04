@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($conn->query($sql) === TRUE) {
 
                 // UPDATE PROJECTOR STATUS
-                $conn->query("UPDATE projectors SET status='borrowed' WHERE projector_id='$projector_id'");
+                $conn->query("UPDATE projectors SET status='in_use' WHERE projector_id='$projector_id'");
 
                 $success = "Projector borrowed successfully!";
             } else {
@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2 class="page_title">LENDING PROJECTORS</h2>
 
-    <form action="lend.php" method="POST">
+    <form action="Lend.php" method="POST">
 
         <div class="row">
             <div class="form-group">
