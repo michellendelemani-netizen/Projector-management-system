@@ -42,6 +42,19 @@ $result = $conn->query($sql);
             </style>
 
 </form>
+<form method="POST" action="add_proj.php" class="form-inline">
+    <input type="hidden" name="projector_id" id="projector_id">
+    <input type="text" name="model" placeholder="Model" id="model" required>
+    <input type="number" name="life_span" placeholder="Life Span" id="life_span" required>
+    <label for="manufactured_date">manufactured_date</label>
+    <input type="date" name="manufactured_date" id="manufactured_date" required>
+    <label for="bought_date">bought_date</label>
+    <input type="date" name="bought_date" id="bought_date" required>
+    <input type="text" name="status" id="status" placeholder="status"  required>
+    <label for="expected_end_of_life">expected end date</label>
+    <input type="date" name="expected_end_of_life" id="expected_end_life" required>
+    <button type="submit" name="save">Add</button>
+</form>
     <table border="1">
         <th>projector id</th>
         <th>model</th>
@@ -103,9 +116,6 @@ $result = $conn->query($sql);
         
         ?>
     </table>
-    <div>
-        <a href="add_projector.html"><button>add</button></a>
-    </div>
     </body>
     
 

@@ -18,6 +18,7 @@ if (isset($_POST['save'])) {
 
     if ($conn->query($sql) === TRUE) {
         echo "Projector added successfully!";
+         header("refresh:1;url=inventory.php");
     } else {
         echo "Error: " . $conn->error;
     }
