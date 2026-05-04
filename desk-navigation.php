@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
             header("Location: login.php");
             exit();
         }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +57,6 @@ if (session_status() === PHP_SESSION_NONE) {
     <!-- top user section -->
     <div class="top-bar">
         <div class="user-info">
-            <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
             <?php echo $_SESSION['first_name'] . " " . $_SESSION['last_name']; ?>
         </div>
         <a href="logout.php" class="logout-btn">
