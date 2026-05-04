@@ -32,7 +32,7 @@ include 'desk-navigation.php';
     </style>
 </head>
 <body>
-
+<br>
 <div class="notification-card">
     <div class="header">Item Usage Alerts</div>
     

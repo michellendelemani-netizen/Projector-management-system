@@ -19,7 +19,7 @@ $borrowed = $conn->query("SELECT COUNT(*) AS total FROM transactions WHERE statu
 // OVERDUE
 $overdue = $conn->query("
 SELECT COUNT(*) AS total FROM transactions 
-WHERE status='pending' AND expected_return_at < NOW()
+WHERE status='flagged' AND expected_return_at < NOW()
 ")->fetch_assoc()['total'];
 
 // MOST USED
