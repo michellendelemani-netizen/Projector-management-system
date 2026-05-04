@@ -5,53 +5,53 @@ include 'connection.php';
 <?php
 include 'desk-navigation.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Item Usage Notifications</title>
-    <style>
-        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
-        .notification-card {
-            background: white;
-            max-width: 400px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .header { background: #3498db; color: white; padding: 15px; font-weight: bold; }
-        .list-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            transition: background 0.2s;
-        }
-        .list-item:hover { background: #f9f9f9; }
-        .list-item.unread { border-left: 4px solid #3498db; }
-        .item-title { font-weight: bold; display: block; }
-        .meta { font-size: 0.85em; color: #777; margin-top: 5px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projector Notification</title>
+     <link rel="stylesheet" href="tracking.css">
+    
 </head>
 <body>
-<br>
-<div class="notification-card">
-    <div class="header">Item Usage Alerts</div>
-    
-    <?php if (empty($notifications)): ?>
-        <div class="list-item">No recent activity.</div>
-    <?php else: ?>
-        <?php foreach ($notifications as $note): ?>
-            <div class="list-item <?php echo $note['status']; ?>">
-                <span class="item-title">
-                    <strong><?php echo htmlspecialchars($note['item_name']); ?></strong> was used.
-                </span>
-                <div class="meta">
-                    By <?php echo htmlspecialchars($note['user_name']); ?> • 
-                    <?php echo date('M j, g:i a', strtotime($note['usage_time'])); ?>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-</div>
+    <table>
+      <tr>
+        <th>projector_id</th>
+        <th>model</th>
+        <th>life_span</th>
+        <th>manufactured_date</th>
+        <th>bought_date</th>
+        <th>status</th>
+        <th>expected_end_of_life</th>
+        <th>is_active</th>
+      </tr>
+ 
+ <?php
+ 
+$conn = new mysqli("localhost", "root", "", "projectordb");
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT projector_id, model, life_span, manufactured_date, bought_date, status, expected_end_of_life, is_active FROM projectors";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        
+        echo "<tr><td>" . $row["projector_id"]. "</td><td>" . $row["model"]. "</td><td>" . $row["life_span"]. "</td><td>" . $row["manufactured_date"]. "</td><td>" . $row["bought_date"]. "</td><td>" . $row["status"]. "</td><td>" . $row["expected_end_of_life"]. "</td><td>" . $row["is_active"]. "</td></tr>";
+    }
+    echo "</table>"; 
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+    </table>
 </body>
 </html>
