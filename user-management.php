@@ -30,18 +30,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email        = $_POST['email'];
     $password     = $_POST['password'];
 
-    $sql = "INSERT INTO users 
+    // check if updating
+    if (isset($_GET['edit'])) {
+        $id = $_GET['edit'];
+
+        $sql = "UPDATE users SET 
+            first_name = '$first_name',
+            middle_name = '$middle_name',
+            last_name = '$last_name',
+            home = '$home',
+            phone_number = '$phone',
+            email = '$email',
+            password = '$password'
+            WHERE user_id = $id";
+
+        if ($conn->query($sql)) {
+            $message = "User updated successfully!";
+            $type = "success";
+            
+        } else {
+            $message = "Error: " . $conn->error;
+            $type = "error";
+        }
+
+    } else {
+
+        $sql = "INSERT INTO users 
         (first_name, middle_name, last_name, home, phone_number, email, password, is_active)
         VALUES 
         ('$first_name', '$middle_name', '$last_name', '$home', '$phone', '$email', '$password', 1)";
 
-    if ($conn->query($sql)) {
-        $message = "User added successfully!";
-        $type = "success";
-    } else {
-        $message = "Error: " . $conn->error;
-        $type = "error";
+        if ($conn->query($sql)) {
+            $message = "User added successfully!";
+            $type = "success";
+        } else {
+            $message = "Error: " . $conn->error;
+            $type = "error";
+        }
     }
+    
 }
 ?>
 

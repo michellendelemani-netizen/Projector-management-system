@@ -46,8 +46,8 @@ $activity = $conn->query($activityQuery);
 <div class="dashboard">
 
   <!-- Actions -->
-  <a href="Lend.php" class="card action">➕ Issue Projector</a>
-  <a href="return.php" class="card action">🔄 Return Projector</a>
+  <!-- <a href="Lend.php" class="card action">➕ Issue Projector</a>
+  <a href="return.php" class="card action">🔄 Return Projector</a> -->
 
   <!-- Status -->
   <div class="card">Available <br><b><?php echo $available; ?></b></div>
