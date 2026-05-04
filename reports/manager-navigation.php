@@ -1,5 +1,8 @@
 <?php
+if (session_status() == PHP_SESSION_NONE)
+    {
 session_start();
+    }
 
         // Protect page (redirect if not logged in or role is does not fit)
         if (!isset($_SESSION['user_id']) && $_SESSION['role'] != 'admin' 
