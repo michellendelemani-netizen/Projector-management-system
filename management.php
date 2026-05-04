@@ -5,24 +5,24 @@ include("connection.php");
 $total = $conn->query("SELECT COUNT(*) AS total FROM projectors")->fetch_assoc()['total'];
 
 // AVAILABLE
-$available = $conn->query("SELECT COUNT(*) AS available FROM projectors WHERE status='available'")
-->fetch_assoc()['available'];
+$available = $conn->query("SELECT COUNT(*) AS total FROM projectors WHERE status='available'")
+->fetch_assoc()['total'];
 
-// BORROWED (active)
-$borrowed = $conn->query("SELECT COUNT(*) AS borrowed FROM transactions WHERE status='pending'")
-->fetch_assoc()['borrowed'];
+// FAULTY
+$faulty = $conn->query("SELECT COUNT(*) AS total FROM projectors WHERE status='faulty'")
+->fetch_assoc()['total'];
 
-// DAMAGED (faulty projectors)
-$damaged = $conn->query("SELECT COUNT(*) AS damaged FROM projectors WHERE status='faulty'")
-->fetch_assoc()['damaged'];
+// BORROWED
+$borrowed = $conn->query("SELECT COUNT(*) AS total FROM transactions WHERE status='pending'")
+->fetch_assoc()['total'];
 
 // OVERDUE
 $overdue = $conn->query("
-SELECT COUNT(*) AS overdue FROM transactions 
+SELECT COUNT(*) AS total FROM transactions 
 WHERE status='pending' AND expected_return_at < NOW()
-")->fetch_assoc()['overdue'];
+")->fetch_assoc()['total'];
 
-// MOST USED (based on transactions)
+// MOST USED
 $mostUsedQuery = "
 SELECT p.model, COUNT(*) AS total_used
 FROM transactions t
@@ -31,8 +31,7 @@ GROUP BY t.projector_id
 ORDER BY total_used DESC
 LIMIT 1
 ";
-$mostUsedResult = $conn->query($mostUsedQuery);
-$mostUsed = $mostUsedResult->fetch_assoc()['model'] ?? "N/A";
+$mostUsed = $conn->query($mostUsedQuery)->fetch_assoc()['model'] ?? "N/A";
 
 // LEAST USED
 $leastUsedQuery = "
@@ -43,14 +42,13 @@ GROUP BY t.projector_id
 ORDER BY total_used ASC
 LIMIT 1
 ";
-$leastUsedResult = $conn->query($leastUsedQuery);
-$leastUsed = $leastUsedResult->fetch_assoc()['model'] ?? "N/A";
+$leastUsed = $conn->query($leastUsedQuery)->fetch_assoc()['model'] ?? "N/A";
 
-// NEW PROJECTORS (last 30 days based on bought_date)
-$newProjectors = $conn->query("
-SELECT COUNT(*) AS new_count FROM projectors 
+// NEW PROJECTORS
+$new = $conn->query("
+SELECT COUNT(*) AS total FROM projectors 
 WHERE bought_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
-")->fetch_assoc()['new_count'];
+")->fetch_assoc()['total'];
 ?>
 
 <!DOCTYPE html>
@@ -71,8 +69,8 @@ WHERE bought_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
   <!-- Alerts -->
   <div class="box alerts">
     <h3>⚠ Alerts</h3>
-    <p><?php echo $overdue; ?> Projectors overdue</p>
-    <p><?php echo $damaged; ?> Faulty projectors</p>
+    <p><?php echo $overdue; ?> overdue projectors</p>
+    <p><?php echo $faulty; ?> faulty projectors</p>
   </div>
 
   <!-- Insights -->
@@ -82,17 +80,17 @@ WHERE bought_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
     <p>Least used: <?php echo $leastUsed; ?></p>
   </div>
 
-  <!-- What's New -->
+  <!-- New -->
   <div class="box news">
     <h3>🆕 What's New</h3>
-    <p><?php echo $newProjectors; ?> new projectors added</p>
+    <p><?php echo $new; ?> new projectors</p>
   </div>
 
   <!-- Summary -->
-  <div class="card">Total Projectors <br><b><?php echo $total; ?></b></div>
+  <div class="card">Total <br><b><?php echo $total; ?></b></div>
   <div class="card">Available <br><b><?php echo $available; ?></b></div>
   <div class="card">Borrowed <br><b><?php echo $borrowed; ?></b></div>
-  <div class="card">Faulty <br><b><?php echo $damaged; ?></b></div>
+  <div class="card">Faulty <br><b><?php echo $faulty; ?></b></div>
 
 </div>
 
