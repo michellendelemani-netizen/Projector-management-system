@@ -1,10 +1,10 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() == PHP_SESSION_NONE)
+    {
+session_start();
+    }
         // Protect page (redirect if not logged in)
-        if (!isset($_SESSION['user_id']) && $_SESSION['role'] != 'desk') {
-        if (!isset($_SESSION['user_id']) && $_SESSION['role'] != 'desk') {
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'desk') {
             header("Location: login.php");
             exit();
         }
