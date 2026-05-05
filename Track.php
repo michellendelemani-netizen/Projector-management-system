@@ -1,5 +1,16 @@
 <?php 
     require("connection.php");
+    // AUTO-FLAG OVERDUE PROJECTORS
+$currentDateTime = date("Y-m-d H:i:s");
+
+$updateFlagged = "
+    UPDATE transactions 
+    SET status = 'flagged'
+    WHERE expected_return_at < '$currentDateTime'
+    AND status = 'pending'
+";
+
+$conn->query($updateFlagged);
 
     
     
