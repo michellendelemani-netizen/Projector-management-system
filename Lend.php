@@ -2,24 +2,34 @@
 session_start();
 include "connection.php";
 
-// HANDLE FORM SUBMISSION
+// handling the form entries
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $projector_id = $_POST['projector_id'];
     $user_type    = $_POST['user_type']; 
     $borrower_id  = $_POST['user_id'];
     $reason       = $_POST['reason'];
-    $borrow_time  = $_POST['borrow_time'];
     $return_time  = $_POST['return_time'];
-    $user_id      = $_SESSION['user_id'];
-     // logged in desk user
+    $user_id      = $_SESSION['user_id']; // logged-in desk user
 
-    // VALIDATE TIME
-    if (strtotime($return_time) <= strtotime($borrow_time)) {
+    // Borrow time is ALWAYS current time 
+    $borrow_time  = date("Y-m-d H:i:s");
+    $current_time = $borrow_time;
+
+    // checks return time only
+    if (strtotime($return_time) <= strtotime($current_time)) {
+        $error = "Return time must be in the future.";
+    } 
+    elseif (strtotime($return_time) <= strtotime($borrow_time)) {
         $error = "Return time must be after borrow time.";
-    } else {
+    } 
+    else {
 
-        // VALIDATE BORROWER EXISTS
+        // default values of borrowers 
+        $student_id = "NULL";
+        $lecturer_id = "NULL";
+
+        // Check if borrower exists in database
         if ($user_type == "Student") {
 
             $check = $conn->query("SELECT * FROM students WHERE student_id = '$borrower_id'");
@@ -27,8 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($check->num_rows == 0) {
                 $error = "Student ID does not exist!";
             } else {
-                $student_id = ($user_type == "Student") ? "'$borrower_id'" : "NULL";
-                $lecturer_id = ($user_type == "Lecturer") ? "'$borrower_id'" : "NULL";
+                $student_id = "'$borrower_id'";
                 $borrower_type = "student";
             }
 
@@ -39,12 +48,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($check->num_rows == 0) {
                 $error = "Lecturer ID does not exist!";
             } else {
-                $student_id = ($user_type == "Student") ? "'$borrower_id'" : "NULL";
-                $lecturer_id = ($user_type == "Lecturer") ? "'$borrower_id'" : "NULL";
+                $lecturer_id = "'$borrower_id'";
                 $borrower_type = "lecturer";
             }
         }
 
+        // Prevent double borrowing
+        if (empty($error)) {
+
+            if ($user_type == "Student") {
+                $active_check = $conn->query("SELECT * FROM transactions WHERE student_id = '$borrower_id' AND status = 'pending'");
+            } else {
+                $active_check = $conn->query("SELECT * FROM transactions WHERE lecturer_id = '$borrower_id' AND status = 'pending'");
+            }
+
+            if ($active_check->num_rows > 0) {
+                $error = "This user already has a projector. Return it first!";
+            }
+        }
+
+        // Insert transaction in transactions table
         if (empty($error)) {
 
             $sql = "INSERT INTO transactions 
@@ -54,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($conn->query($sql) === TRUE) {
 
-                // UPDATE PROJECTOR STATUS
+                // update projector status
                 $conn->query("UPDATE projectors SET status='in_use' WHERE projector_id='$projector_id'");
 
                 $success = "Projector borrowed successfully!";
@@ -119,14 +142,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="reason" required>
 
         <div class="row">
-            <div class="form-group">
-                <label>Borrow Time</label>
-                <input type="datetime-local" name="borrow_time" required>
-            </div>
-
+            
             <div class="form-group">
                 <label>Return Time</label>
-                <input type="datetime-local" name="return_time" required>
+                <input type="datetime-local" name="return_time" min="<?php echo date('Y-m-d\TH:i'); ?>" required>
             </div>
         </div>
 
@@ -139,3 +158,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
